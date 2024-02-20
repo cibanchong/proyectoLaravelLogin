@@ -16,7 +16,8 @@ class ProyectosController extends Controller
     public function index()
     {
         $proyectos = DB::table('proyectos')->get();
-        return view('proyectos.index',['proyectos'-> $proyectos]);
+        return view('proyectos.index',compact('proyectos'));
+        //return view('proyectos.index',['proyectos' -> $proyectos]);
     }
 
     /**
@@ -26,7 +27,7 @@ class ProyectosController extends Controller
      */
     public function create()
     {
-        return view('proyecto.create');
+        return view('proyectos.create');
     }
 
     /**
@@ -37,9 +38,13 @@ class ProyectosController extends Controller
      */
     public function store(Request $request)
     {
-        Proyectos::create($request->all());
-        return redirect()->route('proyecto.index');
-            ->with('success', 'Proyecto creado successfully!');
+        // Proyectos::create($request->all());
+        $proyecto = new Proyectos();
+        $proyecto -> email = $request->post('email');
+        $proyecto -> contra = $request->post('contra');
+        $proyecto->save();
+        return redirect()->route('index.index');
+
     }
 
     /**
@@ -61,8 +66,8 @@ class ProyectosController extends Controller
      */
     public function edit($id)
     {
-        $proyecto = Proyecto::find($id);
-        return view('proyecto.edit', compact('proyecto'));
+        $proyecto = Proyectos::find($id);
+        return view('proyectos.edit', compact('proyecto'));
     }
 
     /**
@@ -74,14 +79,17 @@ class ProyectosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nombre'=> 'required|max:225',
-            'descripcion'=>'required',
-        ]);
-        $proyecto = Proyecto::find($id);
-        $proyecto->update($request->all());
-        return redirect()->route('proyecto.index')
-            ->with('success', 'Post updated successfully!');
+        // $request->validate([
+        //     'email'=> 'required|max:225',
+        //     'contra'=>'required',
+        // ]);
+
+        $proyecto = Proyectos::find($id);
+        $proyecto -> email = $request->post('email');
+        $proyecto -> contra = $request->post('contra');
+        $proyecto->save();
+
+        return redirect()->route('index.index');
     }
 
     /**
@@ -90,11 +98,11 @@ class ProyectosController extends Controller
      * @param  \App\Models\Proyectos  $proyectos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Proyectos $proyectos)
+    public function destroy($id)
     {
-        $proyecto = Proyecto::find($id);
+        $proyecto = Proyectos::find($id);
         $proyecto->delete();
-        return redirect()->route('proyecto.index')
+        return redirect()->route('index.index')
             ->with('success', 'Proyecto deleted successfully');
     }
 }

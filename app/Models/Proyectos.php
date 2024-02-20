@@ -9,7 +9,9 @@ use Illuminare\Support\Facades\DB;
 
 class Proyectos extends Model
 {
+    public $table = 'proyectos';
     use HasFactory;
+
     protected $fillable = [
         'nombre',
         'descripcion',

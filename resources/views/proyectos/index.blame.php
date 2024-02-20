@@ -1,16 +1,14 @@
-
-
 <html>
-	<body>
-		<h1>Hello,</h1>
 
-		@foreach ($proyectos as $proyecto)
-			<li>{{$proyecto->nombre}}</li>
-			<a href="{{route('proyecto.edit', $proyecto->id) }}">Editar</a>
+<body>
+    <h1>Hello,</h1>
 
-				<a href="{{ route('proyecto.edit', ['proyecto'=> $proyecto]) }}">
-				Editar</a>
-		@endforeach
+    @foreach ($proyectos as $proyecto)
+        <li>{{ $proyecto->email }}</li>
+        <a href="{{ route('editar.edit', $proyecto->id) }}">Editar</a>
+        <a href="{{ route('show.destroy', $proyecto->id) }}">Eliminar</a>
+    @endforeach
+    /<a href="{{ route('crea.create') }}">Crear</a>
 
-	<body>
-<html>		
+    <body>
+        <html>
